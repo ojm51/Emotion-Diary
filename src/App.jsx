@@ -1,6 +1,6 @@
-import { useReducer, useRef } from "react";
+import { createContext, useReducer, useRef } from "react";
 import { Route, Routes } from "react-router-dom";
-import "./App.css";
+
 import Home from "./pages/Home";
 import New from "./pages/New";
 import Diary from "./pages/Diary";
@@ -22,8 +22,11 @@ function reducer(state, action) {
   }
 }
 
+const DiaryStateContext = createContext();
+const DiaryDispatchContext = createContext();
+
 function App() {
-  const [diaryState, dispatch] = useReducer(reducer, []);
+  const [diaryData, dispatch] = useReducer(reducer, []);
   const idRef = useRef(3);
 
   const onCreate = (createdDate, emoitonId, content) => {
@@ -61,13 +64,17 @@ function App() {
 
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/new" element={<New />} />
-        <Route path="/diary/:id" element={<Diary />} />
-        <Route path="/edit/:id" element={<Edit />} />
-        <Route path="/*" element={<NotFound />} />
-      </Routes>
+      <DiaryStateContext.Provider value={diaryData}>
+        <DiaryDispatchContext.Provider value={{ onCreate, onUpdate, onDelete }}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/new" element={<New />} />
+            <Route path="/diary/:id" element={<Diary />} />
+            <Route path="/edit/:id" element={<Edit />} />
+            <Route path="/*" element={<NotFound />} />
+          </Routes>
+        </DiaryDispatchContext.Provider>
+      </DiaryStateContext.Provider>
     </>
   );
 }
