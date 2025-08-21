@@ -1,7 +1,14 @@
+import Header from "../components/Header";
+import Button from "../components/Button";
+
 const Home = () => {
   return (
     <div>
-      <h1>Welcome to the Home Page</h1>
+      <Header
+        title={"2025년 8월"}
+        leftChild={<Button text={"<"} />}
+        rightChild={<Button text={">"} />}
+      />
     </div>
   );
 };
