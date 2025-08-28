@@ -3,7 +3,7 @@ import "./DiaryList.css";
 import Button from "./Button";
 import DiaryListItem from "./DiaryListItem";
 
-const DiaryList = () => {
+const DiaryList = ({ diaryData }) => {
   return (
     <div className="DiaryList">
       <div className="menu_bar">
@@ -15,7 +15,9 @@ const DiaryList = () => {
       </div>
 
       <div className="list_wrapper">
-        <DiaryListItem />
+        {diaryData.map((item) => (
+          <DiaryListItem key={item.id} data={item} />
+        ))}
       </div>
     </div>
   );
