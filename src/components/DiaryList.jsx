@@ -2,12 +2,29 @@ import "./DiaryList.css";
 
 import Button from "./Button";
 import DiaryListItem from "./DiaryListItem";
+import { useState } from "react";
 
 const DiaryList = ({ diaryData }) => {
+  const [sortType, setSortType] = useState("latest");
+
+  const onChangeSortType = (e) => {
+    setSortType(e.target.value);
+  };
+
+  const getSortedDiaryData = () => {
+    return diaryData.toSorted((a, b) => {
+      if (sortType === "latest")
+        return Number(b.createdDate) - Number(a.createdDate);
+      return Number(a.createdDate) - Number(b.createdDate);
+    });
+  };
+
+  const sortedDiaryData = getSortedDiaryData();
+
   return (
     <div className="DiaryList">
       <div className="menu_bar">
-        <select name="" id="">
+        <select onChange={onChangeSortType}>
           <option value="latest">최신순</option>
           <option value="oldest">오래된 순</option>
         </select>
@@ -15,7 +32,7 @@ const DiaryList = ({ diaryData }) => {
       </div>
 
       <div className="list_wrapper">
-        {diaryData.map((item) => (
+        {sortedDiaryData.map((item) => (
           <DiaryListItem key={item.id} data={item} />
         ))}
       </div>
