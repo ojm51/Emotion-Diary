@@ -7,6 +7,27 @@ import Diary from "./pages/Diary";
 import Edit from "./pages/Edit";
 import NotFound from "./pages/NotFound";
 
+const mockData = [
+  {
+    id: 1,
+    createdDate: new Date("2025-08-28").getTime(),
+    emotionId: 1,
+    content: "1th diary content",
+  },
+  {
+    id: 2,
+    createdDate: new Date("2025-08-27").getTime(),
+    emotionId: 2,
+    content: "2th diary content",
+  },
+  {
+    id: 3,
+    createdDate: new Date("2025-07-27").getTime(),
+    emotionId: 3,
+    content: "3th diary content",
+  },
+];
+
 function reducer(state, action) {
   switch (action.type) {
     case "CREATE":
@@ -22,11 +43,11 @@ function reducer(state, action) {
   }
 }
 
-const DiaryStateContext = createContext();
-const DiaryDispatchContext = createContext();
+export const DiaryStateContext = createContext();
+export const DiaryDispatchContext = createContext();
 
 function App() {
-  const [diaryData, dispatch] = useReducer(reducer, []);
+  const [diaryData, dispatch] = useReducer(reducer, mockData);
   const idRef = useRef(3);
 
   const onCreate = (createdDate, emoitonId, content) => {
