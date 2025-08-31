@@ -2,9 +2,12 @@ import "./DiaryListItem.css";
 
 import getEmotionImage from "../utils/getEmotionImage";
 import Button from "./Button";
+import { useNavigate } from "react-router-dom";
 
 const DiaryListItem = ({ data }) => {
   const { id, emotionId, createdDate, content } = data;
+
+  const nav = useNavigate();
 
   return (
     <div className="DiaryListItem">
@@ -23,7 +26,12 @@ const DiaryListItem = ({ data }) => {
       </div>
 
       <div className="button_section">
-        <Button text={"수정하기"} />
+        <Button
+          onClick={() => {
+            nav(`/edit/${id}`);
+          }}
+          text={"수정하기"}
+        />
       </div>
     </div>
   );
