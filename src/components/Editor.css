@@ -29,3 +29,8 @@ textarea {
   resize: vertical;
   box-sizing: border-box;
 }
+
+.Editor .button_section {
+  display: flex;
+  justify-content: space-between;
+}

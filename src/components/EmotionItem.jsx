@@ -5,7 +5,7 @@ const EmotionItem = ({ emotionId, emotionName, isSelected }) => {
   return (
     <div
       className={`EmotionItem ${
-        isSelected ? `EmtionItem_on_${emotionId}` : ""
+        isSelected ? `EmotionItem_on_${emotionId}` : ""
       }`}
     >
       <img
