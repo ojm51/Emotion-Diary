@@ -63,7 +63,12 @@ const Editor = () => {
 
       <section className="content_section">
         <h4>오늘의 일기</h4>
-        <textarea name="content" placeholder="오늘은 어땠나요?" />
+        <textarea
+          onChange={onChangeInput}
+          name="content"
+          value={input.content}
+          placeholder="오늘은 어땠나요?"
+        />
       </section>
 
       <section className="button_section">
