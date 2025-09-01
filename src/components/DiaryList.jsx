@@ -1,13 +1,15 @@
 import "./DiaryList.css";
 
-import Button from "./Button";
-import DiaryListItem from "./DiaryListItem";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import Button from "./Button";
+import DiaryListItem from "./DiaryListItem";
+
 const DiaryList = ({ diaryData }) => {
-  const [sortType, setSortType] = useState("latest");
   const nav = useNavigate();
+
+  const [sortType, setSortType] = useState("latest");
 
   const onChangeSortType = (e) => {
     setSortType(e.target.value);
