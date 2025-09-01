@@ -1,10 +1,10 @@
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { DiaryDispatchContext } from "../App";
 
 import Button from "../components/Button";
 import Editor from "../components/Editor";
 import Header from "../components/Header";
-import { useNavigate } from "react-router-dom";
 
 const New = () => {
   const nav = useNavigate();

@@ -1,4 +1,6 @@
-// 날짜 형식을 "YYYY-MM-DD"로 변환
+/**
+ * 날짜 형식을 "YYYY-MM-DD"로 변환
+ */
 
 const getStringDate = (targetDate) => {
   let year = targetDate.getFullYear();
