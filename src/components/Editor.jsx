@@ -49,6 +49,11 @@ const Editor = () => {
           {emotionList.map((item) => (
             <EmotionItem
               key={item.emotionId}
+              onClick={() => {
+                onChangeInput({
+                  target: { name: "emotionId", value: item.emotionId },
+                });
+              }}
               {...item}
               isSelected={item.emotionId === input.emotionId}
             />
