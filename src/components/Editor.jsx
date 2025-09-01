@@ -12,7 +12,7 @@ const emotionList = [
   { emotionId: 5, emotionName: "끔찍함" },
 ];
 
-const Editor = () => {
+const Editor = ({ onSubmit }) => {
   const [input, setInput] = useState({
     createdDate: new Date(),
     emotionId: 0,
@@ -29,6 +29,10 @@ const Editor = () => {
       ...input,
       [name]: value,
     });
+  };
+
+  const onClickSubmitButton = () => {
+    onSubmit(input);
   };
 
   return (
@@ -73,7 +77,11 @@ const Editor = () => {
 
       <section className="button_section">
         <Button text={"취소하기"} />
-        <Button text={"완료하기"} type={"positive"} />
+        <Button
+          onClick={onClickSubmitButton}
+          text={"완료하기"}
+          type={"positive"}
+        />
       </section>
     </div>
   );
