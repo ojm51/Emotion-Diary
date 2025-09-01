@@ -1,6 +1,8 @@
+import { useState } from "react";
 import "./Editor.css";
 import Button from "./Button";
 import EmotionItem from "./EmotionItem";
+import getStringDate from "../utils/getStringDate";
 
 const emotionList = [
   { emotionId: 1, emotionName: "완전 좋음" },
@@ -11,13 +13,34 @@ const emotionList = [
 ];
 
 const Editor = () => {
-  const emotionId = 1;
+  const [input, setInput] = useState({
+    createdDate: new Date(),
+    emotionId: 0,
+    content: "",
+  });
+
+  const onChangeInput = (e) => {
+    let name = e.target.name;
+    let value = e.target.value;
+
+    if (name === "createdDate") value = new Date(value);
+
+    setInput({
+      ...input,
+      [name]: value,
+    });
+  };
 
   return (
     <div className="Editor">
       <section className="date_section">
         <h4>오늘의 날짜</h4>
-        <input type="date" />
+        <input
+          name="createdDate"
+          value={getStringDate(input.createdDate)}
+          onChange={onChangeInput}
+          type="date"
+        />
       </section>
 
       <section className="emotion_section">
@@ -27,7 +50,7 @@ const Editor = () => {
             <EmotionItem
               key={item.emotionId}
               {...item}
-              isSelected={item.emotionId === emotionId}
+              isSelected={item.emotionId === input.emotionId}
             />
           ))}
         </div>
@@ -35,7 +58,7 @@ const Editor = () => {
 
       <section className="content_section">
         <h4>오늘의 일기</h4>
-        <textarea placeholder="오늘은 어땠나요?"></textarea>
+        <textarea name="content" placeholder="오늘은 어땠나요?" />
       </section>
 
       <section className="button_section">
