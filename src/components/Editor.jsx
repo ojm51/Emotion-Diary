@@ -3,6 +3,7 @@ import "./Editor.css";
 import Button from "./Button";
 import EmotionItem from "./EmotionItem";
 import getStringDate from "../utils/getStringDate";
+import { useNavigate } from "react-router-dom";
 
 const emotionList = [
   { emotionId: 1, emotionName: "완전 좋음" },
@@ -13,6 +14,8 @@ const emotionList = [
 ];
 
 const Editor = ({ onSubmit }) => {
+  const nav = useNavigate();
+
   const [input, setInput] = useState({
     createdDate: new Date(),
     emotionId: 0,
@@ -76,7 +79,12 @@ const Editor = ({ onSubmit }) => {
       </section>
 
       <section className="button_section">
-        <Button text={"취소하기"} />
+        <Button
+          onClick={() => {
+            nav(-1);
+          }}
+          text={"취소하기"}
+        />
         <Button
           onClick={onClickSubmitButton}
           text={"완료하기"}
