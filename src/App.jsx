@@ -50,25 +50,25 @@ function App() {
   const [diaryData, dispatch] = useReducer(reducer, mockData);
   const idRef = useRef(3);
 
-  const onCreate = (createdDate, emoitonId, content) => {
+  const onCreate = (createdDate, emotionId, content) => {
     dispatch({
       type: "CREATE",
       data: {
         id: idRef.current++,
         createdDate,
-        emoitonId,
+        emotionId,
         content,
       },
     });
   };
 
-  const onUpdate = (id, createdDate, emoitonId, content) => {
+  const onUpdate = (id, createdDate, emotionId, content) => {
     dispatch({
       type: "UPDATE",
       data: {
         id: id,
         createdDate,
-        emoitonId,
+        emotionId,
         content,
       },
     });
