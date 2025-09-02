@@ -11,14 +11,17 @@ const DiaryListItem = ({ data }) => {
 
   return (
     <div className="DiaryListItem">
-      <div className={`img_section img_section_${emotionId}`}>
+      <div
+        onClick={() => nav(`/diary/${id}`)}
+        className={`img_section img_section_${emotionId}`}
+      >
         <img
           src={getEmotionImage(emotionId)}
           alt={`${emotionId}번 감정 이미지`}
         />
       </div>
 
-      <div className="info_section">
+      <div onClick={() => nav(`/diary/${id}`)} className="info_section">
         <div className="created_date">
           {new Date(createdDate).toLocaleDateString()}
         </div>
@@ -26,12 +29,7 @@ const DiaryListItem = ({ data }) => {
       </div>
 
       <div className="button_section">
-        <Button
-          onClick={() => {
-            nav(`/edit/${id}`);
-          }}
-          text={"수정하기"}
-        />
+        <Button onClick={() => nav(`/edit/${id}`)} text={"수정하기"} />
       </div>
     </div>
   );
