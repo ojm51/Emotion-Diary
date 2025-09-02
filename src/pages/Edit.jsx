@@ -8,9 +8,9 @@ import { DiaryDispatchContext, DiaryStateContext } from "../App";
 const Edit = () => {
   const params = useParams();
   const nav = useNavigate();
-
   const diaryData = useContext(DiaryStateContext);
   const { onDelete, onUpdate } = useContext(DiaryDispatchContext);
+
   const [initData, setInitData] = useState();
 
   useEffect(() => {
@@ -33,6 +33,18 @@ const Edit = () => {
     }
   };
 
+  const onClickSubmit = (input) => {
+    if (window.confirm("일기를 정말 수정할까요?")) {
+      onUpdate(
+        params.id,
+        input.createdDate.getTime(),
+        input.emotionId,
+        input.content
+      );
+      nav("/", { replace: true });
+    }
+  };
+
   return (
     <div>
       <Header
@@ -42,7 +54,7 @@ const Edit = () => {
           <Button onClick={onClickDelete} text={"삭제하기"} type={"negative"} />
         }
       />
-      <Editor initData={initData} />
+      <Editor initData={initData} onSubmit={onClickSubmit} />
     </div>
   );
 };
