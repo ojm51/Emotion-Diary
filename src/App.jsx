@@ -48,7 +48,7 @@ export const DiaryDispatchContext = createContext();
 
 function App() {
   const [diaryData, dispatch] = useReducer(reducer, mockData);
-  const idRef = useRef(3);
+  const idRef = useRef(4);
 
   const onCreate = (createdDate, emotionId, content) => {
     dispatch({
