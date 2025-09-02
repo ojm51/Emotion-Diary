@@ -1,6 +1,7 @@
+import "./Editor.css";
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Editor.css";
 import getStringDate from "../utils/getStringDate";
 import emotionList from "../contents/emotionList";
 
