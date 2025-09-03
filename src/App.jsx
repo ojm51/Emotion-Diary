@@ -1,4 +1,4 @@
-import { createContext, useReducer, useRef } from "react";
+import { createContext, useEffect, useReducer, useRef, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 
 import Home from "./pages/Home";
@@ -7,48 +7,72 @@ import Diary from "./pages/Diary";
 import Edit from "./pages/Edit";
 import NotFound from "./pages/NotFound";
 
-const mockData = [
-  {
-    id: 1,
-    createdDate: new Date("2025-08-28").getTime(),
-    emotionId: 1,
-    content: "1th diary content",
-  },
-  {
-    id: 2,
-    createdDate: new Date("2025-08-27").getTime(),
-    emotionId: 2,
-    content: "2th diary content",
-  },
-  {
-    id: 3,
-    createdDate: new Date("2025-07-27").getTime(),
-    emotionId: 3,
-    content: "3th diary content",
-  },
-];
-
 function reducer(state, action) {
+  let nextState;
+
   switch (action.type) {
+    case "INIT":
+      return action.data;
+
     case "CREATE":
-      return [...state, action.data];
+      nextState = [...state, action.data];
+      break;
     case "UPDATE":
-      return state.map((item) =>
+      nextState = state.map((item) =>
         String(item.id) === String(action.data.id) ? action.data : item
       );
+      break;
     case "DELETE":
-      return state.filter((item) => String(item.id) !== String(action.data.id));
+      nextState = state.filter(
+        (item) => String(item.id) !== String(action.data.id)
+      );
+      break;
+
     default:
       return state;
   }
+
+  localStorage.setItem("diary", JSON.stringify(nextState));
+
+  return nextState;
 }
 
 export const DiaryStateContext = createContext();
 export const DiaryDispatchContext = createContext();
 
 function App() {
-  const [diaryData, dispatch] = useReducer(reducer, mockData);
-  const idRef = useRef(4);
+  const [isLoading, setIsLoading] = useState(true);
+  const [diaryData, dispatch] = useReducer(reducer, []);
+  const idRef = useRef(0);
+
+  useEffect(() => {
+    const storedData = localStorage.getItem("diary");
+    if (!storedData) {
+      setIsLoading(false);
+      return;
+    }
+
+    const parsedData = JSON.parse(storedData);
+    if (!Array.isArray(parsedData)) {
+      setIsLoading(false);
+      return;
+    }
+
+    let maxId = 0;
+    parsedData.forEach((item) => {
+      if (Number(item.id) > maxId) {
+        maxId = Number(item.id);
+      }
+    });
+    idRef.current = maxId + 1;
+
+    dispatch({
+      type: "INIT",
+      data: parsedData,
+    });
+
+    setIsLoading(false);
+  }, []);
 
   const onCreate = (createdDate, emotionId, content) => {
     dispatch({
@@ -82,6 +106,10 @@ function App() {
       },
     });
   };
+
+  if (isLoading) {
+    return <div>Loading data...</div>;
+  }
 
   return (
     <>
